@@ -8,6 +8,7 @@ interface InitialState {
   isLogOut: boolean,
   isSignUp: boolean,
   isProfile: boolean,
+  isServerError: boolean,
 }
 
 const initialState: InitialState  = {
@@ -18,6 +19,7 @@ const initialState: InitialState  = {
   isLogOut: false,
   isSignUp: false,
   isProfile: false,
+  isServerError: false,
 }
 
 const uiSlice = createSlice({
@@ -52,6 +54,9 @@ const uiSlice = createSlice({
     },
     dataBaseUpdating: (state, action) => {
       state.isDataBaseUpdating = action.payload;
+    },
+    setServerError: (state, action) => {
+      state.isServerError = action.payload;
     }
   }
 });
@@ -64,6 +69,7 @@ export const {
   toggleProfile,
   creatingTodo,
   dataBaseUpdating,
+  setServerError,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

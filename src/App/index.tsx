@@ -21,7 +21,8 @@ function App() {
     currentSearch, 
     isMenu, 
     isCreating, 
-    isDataBaseUpdating
+    isDataBaseUpdating,
+    isServerError
   } = useMySelector();
 
   const openNewTodo = () => {
@@ -57,6 +58,10 @@ function App() {
     initializeApp();
   },[userAccount, configuration]);
 
+  const reloadServer = () => {
+    location.reload();
+  }
+
   return (
     <div className={`relative flex flex-col items-center gap-8 w-full min-h-[100vh] px-[30%] py-4`}>
       <p className='absolute top-1 right-1'>{userAccount?.name}</p>
@@ -85,6 +90,14 @@ function App() {
           </div>
         </div>
       )}
+      {isServerError && 
+        <div className='absolute top-0 flex items-center justify-center w-full h-full bg-black bg-opacity-50'>
+          <div className='flex flex-col items-center justify-evenly w-96 h-48 p-4 rounded bg-white'>
+            <p className='font-semibold'>Error Servidor</p>
+            <button onClick={reloadServer} className="p-1 border rounded bg-slate-400 hover:bg-slate-300 active:bg-slate-400">Volver a cargar</button>
+          </div>
+        </div>
+      }
     </div>
   );
 }

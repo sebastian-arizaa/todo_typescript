@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import { dataBaseUpdating } from "./ui";
+import { dataBaseUpdating, setServerError } from "./ui";
 import axios from "axios";
 
 interface InitialState {
@@ -67,8 +67,10 @@ export const fetchTodos = createAsyncThunk<void, {currentSearch: string, idUser:
       
       dispatch(setTodos({todos: response.data}));
       dispatch(searchTodo({search: currentSearch}));
+      dispatch(setServerError(false));
     } catch (error) {
       console.log("Error: " + error)
+      dispatch(setServerError(true));
     } finally {
       dispatch(dataBaseUpdating(false));
     }
@@ -81,8 +83,10 @@ export const fetchAddTodo = createAsyncThunk<void, Todo>(
     dispatch(dataBaseUpdating(true));
     try {   
       await axios.post('http://localhost:3001/todos', todo);
+      dispatch(setServerError(false));
     } catch (error) {
       console.log("Error: " + error);
+      dispatch(setServerError(true));
     } finally {
       dispatch(dataBaseUpdating(false));
     }
@@ -95,8 +99,10 @@ export const fetchCompleteTodo = createAsyncThunk<void, Todo>(
     dispatch(dataBaseUpdating(true));
     try {
       await axios.put('http://localhost:3001/todos', todo);
+      dispatch(setServerError(false));
     } catch (error) {
       console.log("Error: " + error);
+      dispatch(setServerError(true));
     } finally {
       dispatch(dataBaseUpdating(false));
     }
@@ -109,8 +115,10 @@ export const fetchUpdateTodo = createAsyncThunk<void, Todo>(
     dispatch(dataBaseUpdating(true));
     try {
       await axios.put('http://localhost:3001/todos', todo);
+      dispatch(setServerError(false));
     } catch (error) {
       console.log("Error: " + error);
+      dispatch(setServerError(true));
     } finally {
       dispatch(dataBaseUpdating(false));
     }
@@ -122,9 +130,11 @@ export const fetchDeleteTodo = createAsyncThunk<void, number>(
   async (id, {dispatch}) => {
     dispatch(dataBaseUpdating(true));
     try {
-      await axios.delete('http://localhost:3001/todos/' + id);  
+      await axios.delete('http://localhost:3001/todos/' + id); 
+      dispatch(setServerError(false));
     } catch (error) {
       console.log("Error: " + error);
+      dispatch(setServerError(true));
     } finally {
       dispatch(dataBaseUpdating(false));
     }

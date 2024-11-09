@@ -30,11 +30,12 @@ db.connect((err)=> {
 
 // GET a la tabla configuration
 
-app.get('/configuration', (req, res)=> {
+app.get('/configuration', (_, res)=> {
   const mysqlQuery = "SELECT * FROM configuration";
   db.query(mysqlQuery, (err, result) => {
     if(err) {
       console.log("Error: ", err);
+      res.status(500).json({Error: "No llego"});
     }else {
       res.json(result);
     }

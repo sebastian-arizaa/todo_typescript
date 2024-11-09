@@ -17,6 +17,7 @@ export const useMySelector = () => {
   const isMenu = useSelector((state: RootReducer) => state.ui.isMenu);
   const isCreating = useSelector((state: RootReducer) => state.ui.isCreating);
   const isDataBaseUpdating = useSelector((state: RootReducer) => state.ui.isDataBaseUpdating);
+  const isServerError = useSelector((state: RootReducer) => state.ui.isServerError);
   const isLogIn = useSelector((state: RootReducer) => state.ui.isLogIn);
   const isLogOut = useSelector((state: RootReducer) => state.ui.isLogOut);
   const isSignUp = useSelector((state: RootReducer) => state.ui.isSignUp);
@@ -31,6 +32,7 @@ export const useMySelector = () => {
     isMenu,
     isCreating,
     isDataBaseUpdating,
+    isServerError,
     isLogIn,
     isLogOut,
     isSignUp,

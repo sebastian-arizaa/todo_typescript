@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
-import { dataBaseUpdating } from "./ui";
+import { dataBaseUpdating, setServerError } from "./ui";
 
 
 interface InitialState {
@@ -38,9 +38,12 @@ export const fetchSetConfiguration = createAsyncThunk<void>(
     dispatch(dataBaseUpdating(true));
     try {
       const response = await axios.get("http://localhost:3001/configuration");
+      console.log({response})
       dispatch(setConfiguration(response.data[0] as MyConfigurationData));
+      dispatch(setServerError(false));
     } catch (error: any) {
       console.log("Error: ", error);
+      dispatch(setServerError(true));
     } finally {
       dispatch(dataBaseUpdating(false));
     }
@@ -53,8 +56,10 @@ export const fetchUpdateConfiguration = createAsyncThunk<void, number | null>(
     dispatch(dataBaseUpdating(true));
     try {
       await axios.put("http://localhost:3001/configuration", {idUser});
+      dispatch(setServerError(false));
     } catch (error: any) {
       console.log("Error: ", error);
+      dispatch(setServerError(true));
     } finally {
       dispatch(dataBaseUpdating(false));
     }
